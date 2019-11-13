@@ -44,6 +44,13 @@ for i in range(10):
     #   user_id: 用户id
     #   app_id： 应用程序id
     #   cluster_id: 集群id
+
+
+    # basic_publish 中 mandatory
+    # mandatory：告诉服务器至少将该消息route到一个队列中，否则将消息返还给生产者
+    # immediate：告诉服务器如果该消息关联的queue上有消费者，则马上将消息投递给它，如果所有queue都没有消费者，直接把消息返还给生产者，不用将消息入队列等待消费者了
+    # channel.basic_publish(exchange='', routing_key='', body=str(i), mandatory=True, immediate=True)
+
     channel.basic_publish(exchange='', routing_key='hello', body=str(i), properties=pika.BasicProperties(
                            delivery_mode=2, expiration='1000', priority=i))
 print("开始队列")
