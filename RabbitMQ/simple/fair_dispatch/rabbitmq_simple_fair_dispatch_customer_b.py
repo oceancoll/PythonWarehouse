@@ -23,6 +23,9 @@ connection = pika.BlockingConnection(pika.ConnectionParameters('106.12.200.182',
 channel = connection.channel()
 # 声明消息队列，消息将在这个队列中进行传递。如果将消息发送到不存在的队列，rabbitmq将会自动清除这些消息。如果队列不存在，则创建
 channel.queue_declare(queue='hello3')
+# prefetch_count:最大unack的数量，prefetch_size:最大unack的字节数，global_qos:是否该connection上全局设置qos，如果为true则该connection上
+# 的channel的都满足设置条件
+# channel.basic_qos(prefetch_count=1, prefetch_size=100, global_qos=True)
 channel.basic_qos(prefetch_count=1)
 def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
